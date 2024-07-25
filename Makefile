@@ -21,13 +21,13 @@ MPP931: replace_MPP931 compile_MPP931
 
 
 replace_SMP931:
-	awk ' BEGIN       {p=1}   /^C start of umat43/   {print; system("cat WORK_R931/umat43.f");p=0} /^c END OF UMAT43/  {p=1} p' SMP_R931/dyn21.f >  dyn21.f_SMP
-	cp dyn21.f_SMP SMP_R931/dyn21.f
+	awk ' BEGIN       {p=1}   /^C start of umat43/   {print; system("cat WORK_R931/umat43.f");p=0} /^c END OF UMAT43/  {p=1} p' SMP_R931/dyn21.f >  dyn21.f_SMP_R931
+	cp dyn21.f_SMP_R931 SMP_R931/dyn21.f
 # replace MPP
 
 replace_MPP931:
-	awk ' BEGIN       {p=1}   /^C start of umat43/   {print; system("cat WORK_R931/umat43.f");p=0} /^c END OF UMAT43/  {p=1} p' dyn21.f >  dyn21.f_MPP_R931
-	cp dyn21.f_MPP MPP_R931/dyn21.f
+	awk ' BEGIN       {p=1}   /^C start of umat43/   {print; system("cat WORK_R931/umat43.f");p=0} /^c END OF UMAT43/  {p=1} p' MPP_R931/dyn21.f >  dyn21.f_MPP_R931
+	cp dyn21.f_MPP_R931 MPP_R931/dyn21.f
 
 # COMPILATION	
 # compile SMP	
