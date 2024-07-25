@@ -1,10 +1,12 @@
 # Viscoelastic Cross-bridge Active Titin Muscle Model for LS-DYNA
 
-This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1.
+This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1. This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3].
 
-Matthew Millard, David W. Franklin, Walter Herzog (2023). A three filament mechanistic model of musculotendon force and impedance eLife12:RP88344 https://doi.org/10.7554/eLife.88344.2
+1. Matthew Millard, Norman Stutzig, Jörg Fehr, Tobias Siebert. A benchmark of muscle models to length changes great and small. Journal of the Mechanical Behavior of Biomedical Materials. 2024 (submitted)
 
-Wochner I, Nölle LV, Martynenko OV, Schmitt S. ‘Falling heads’: investigating reflexive responses to head–neck perturbations. BioMedical Engineering OnLine. 2022 Apr 16;21(1):25.
+2. Matthew Millard, David W Franklin, Walter Herzog. A three filament mechanistic model of musculotendon force and impedance. eLife 12:RP88344, https://doi.org/10.7554/eLife.88344.3, 2024 (accepted)
+
+3. Wochner I, Nölle LV, Martynenko OV, Schmitt S. ‘Falling heads’: investigating reflexive responses to head–neck perturbations. BioMedical Engineering OnLine. 2022 Apr 16;21(1):25.
 
 ## Pre-requisites
 
