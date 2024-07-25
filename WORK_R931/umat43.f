@@ -1,3 +1,9 @@
+c
+c SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+c
+c SPDX-License-Identifier: MIT
+c
+c
 c=======================================================================
 c     Background
 c=======================================================================

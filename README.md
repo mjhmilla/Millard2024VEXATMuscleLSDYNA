@@ -1,12 +1,19 @@
 # Viscoelastic Cross-bridge Active Titin Muscle Model for LS-DYNA
 
-This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1. This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3].
+This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1 using the MPP (  massively-parallel-processing) interface. It is possible to build the SMP (shared-memory-parallel) interface, but this has not been tested as of July 2024). This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3]. Please reference papers [1,2] if you use the VEXAT muscle model, and paper [3] for the reflex-controller.
 
 1. Matthew Millard, Norman Stutzig, Jörg Fehr, Tobias Siebert. A benchmark of muscle models to length changes great and small. Journal of the Mechanical Behavior of Biomedical Materials. 2024 (submitted)
 
 2. Matthew Millard, David W Franklin, Walter Herzog. A three filament mechanistic model of musculotendon force and impedance. eLife 12:RP88344, https://doi.org/10.7554/eLife.88344.3, 2024 (accepted)
 
 3. Wochner I, Nölle LV, Martynenko OV, Schmitt S. ‘Falling heads’: investigating reflexive responses to head–neck perturbations. BioMedical Engineering OnLine. 2022 Apr 16;21(1):25.
+
+
+All of the code and files in this repository are covered by the license mentioned in the SPDX file header which makes it possible to audit the licenses in this code base using the ```reuse lint``` command from https://api.reuse.software/. A full copy of the license can be found in the LICENSES folder. To keep the reuse tool happy even this file has a license:
+
+ SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+
+ SPDX-License-Identifier: MIT
 
 ## Pre-requisites
 
@@ -213,7 +220,19 @@ ktFcnN.0000000002
 ```
 The output files from the muscle model can be suppressed by setting the ```output``` flag to 0 in the umat43 material card.
 
-## Notes
+## Folder Layout
+
+6. Here is a quick overview of all of the folders that appear
+  - build: contains the files needed to build a version of LS-DYNA with user materials. These files should be stored in the folders MPP_9.3.1/usermat/ and SMP_9.3.1/usermat/ for the multiple message passing and single message passing interfaces respectively.
+  - example: contains the files needed to run the umat43 user material to test that it is working.
+  - LICENSE: A folder that contains the licenses that apply to the files in this project. This project's licensing will be compliant with the license auditing tool provided by https://api.reuse.software/
+  - MPP_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
+  - SMP_R931: Same as the MPP_R931 folder but contains the single-message-passing compiled version of LS-DYNA (not tested).
+  - WORK_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
+
+
+
+## Developer Notes
 
 1. Detailed documentation on umat43.f appears in the beginning of the file.
 
@@ -221,7 +240,7 @@ The output files from the muscle model can be suppressed by setting the ```outpu
 
 3. If you change the layout of the hsv vector you will have to do this carefully: the layout of this vector is detailed near line 469 of umat43.f. Any updates may also require changes to the idxHsv variables (e.g. idxHsvLp) that store the indices of the hsv values in user-friendly names.
 
-## Upgrades
+## Future Work
 
 1. All of the curves used in this model are quadratic Bezier splines that have been hard coded in the model. The user is only provided with a modest ability to scale and shift some of these curves, but there is not fine-grained control over the shape of these curves. While this makes the model relatively easy to use, it limits the degree of customization that is possible. Although it will result in slower code, it would be good to 
 
@@ -234,3 +253,6 @@ The output files from the muscle model can be suppressed by setting the ```outpu
     1. Jami L. Golgi tendon organs in mammalian skeletal muscle: functional properties and central actions. Physiological reviews. 1992 Jul 1;72(3):623-66.
 
     2. Chalmers G. Strength training: Do Golgi tendon organs really inhibit muscle activity at high force levels to save muscles from injury, and adapt with strength training?. Sports biomechanics. 2002 Jul 1;1(2):239-49.
+
+
+

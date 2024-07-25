@@ -1,3 +1,9 @@
+%%
+% SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+%
+% SPDX-License-Identifier: MIT
+%
+%%
 function [hsv, stats] = applyRingBuffer(cm,hsv,ncycle,idpart,tt,no_hsvs,trueDelayedValue)
 
 idxHsvLceATN          = 6;

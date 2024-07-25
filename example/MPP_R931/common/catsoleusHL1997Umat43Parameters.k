@@ -1,3 +1,9 @@
+$
+$ SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+$
+$ SPDX-License-Identifier: MIT
+$
+$
 *KEYWORD
 *PARAMETER
 $#   prmr1      val1     prmr2      val2     prmr3      val3     prmr4      val4

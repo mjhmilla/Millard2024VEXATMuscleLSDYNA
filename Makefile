@@ -1,5 +1,11 @@
-
-## Makefile to compile user material on dyn21.f in current folder 
+#
+# SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+#
+#
+#
+# Makefile to compile user material on dyn21.f in current folder 
 # Define whether using SMP or MPP (this is also related to dyn21.f file)
 # created Fabian Kempter 7. Nov. 2019
 # modified Fabian Kempter 27. Oct. 2021
