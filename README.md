@@ -10,7 +10,7 @@ Wochner I, Nölle LV, Martynenko OV, Schmitt S. ‘Falling heads’: investigati
 
 1. A working copy of LS-DYNA R9.3.1.
 
-2. Able to compile your own user materials.
+2. Able to compile your own user materials using the MPP version.
 
 
 ## Compilation 
@@ -19,7 +19,7 @@ Wochner I, Nölle LV, Martynenko OV, Schmitt S. ‘Falling heads’: investigati
 
 2. Edit the copy of dyn21.f so that `C start of umat43` appears just before `subroutine umat43` and `c END OF SUBROUTINE UMAT43` appears after the end statement. 
 
-3. Put the files needed to compile an LS-DYNA user material into build/MPP_9.3.1/usermat for the MPP version, and build/MPP_9.3.1/usermat for the SMP version. On my machine this list of files includes:
+3. Put the files needed to compile an LS-DYNA user material into build/MPP_9.3.1/usermat/ folder. On my machine this list of files includes:
 
 ```
 adjcom.inc
@@ -149,30 +149,86 @@ xjobid.inc
 
 6. From the same terminal that you've just used to load the oneAPI tools call `make MPP931` to compile the MPP version of the library.
 
-7. If everyting works you'll have an ```mppdyna``` executable in the MPP_931.
+7. If everything works you'll have an ```mppdyna``` executable in the MPP_931.
 
 ## Testing
 
-1. Open a terminal in 'Millard2024VEXATMuscleLSDYNA' 
-2. From this terminal call  ```MPP_R931/mppdyna i=/example/MPP_R931/umat43/active_passive_force_length/active_force_length_06/active_force_length_06.k```
-3. If everying works LS-DYNA will activate a cat soleus model at its optimal fiber length. The simulation requires these files:
-- example/MPP_R931/umat43/active_force_length_06/active_force_length_06.k
-- example/MPP_R931/umat43/active_force_length_06/active_passive_force_length.k
-- example/MPP_R931/common/catsoleusHL1997Umat43Parameters.k
-- example/MPP_R931/common/catsoleusHL1997Umat43.k
-See catsoleusHL1997Umat43.k for an example umat43 card.
+1. Open a terminal in 'Millard2024VEXATMuscleLSDYNA/example/MPP_R931/umat43/active_passive_force_length/active_force_length_06/' 
+2. From this terminal call  ```../../../../../MPP_R931/mppdyna i=active_force_length_06.k```
+3. If everying works LS-DYNA will activate the cat soleus model at its optimal fiber length and produce a large number of output files:
+
+```
+adptmp
+bg_switch
+binout0000
+d3dump01.0000
+d3full01
+d3hsp
+d3plot
+d3plot01
+d3plot02
+f1HN.0000000002
+f2HN.0000000002
+falN.0000000002
+fCpFcnN.0000000002
+fecmHN.0000000002
+fort.13
+fort.59
+ftFcnN.0000000002
+fvN.0000000002
+glstat
+kill_by_pid
+ktFcnN.0000000002
+load_profile.csv
+load_profile.xy
+mes0000
+musdebug.0000000002
+musout.0000000002
+status.out
+
+```
+
+These files are output files produce by LS-DYNA
+```
+binout0000 (binary)
+d3hsp (text)
+```
+This file is from the muscle model (space separated with human-readable column headers) and is generated whenever the output field in the muscle card is set to 1 or higher
+```
+musout.0000000002
+```
+These files are also from the muscle model (space separated with human-readable column headers) and are generated when the output field in the muscle card is set to 2
+```
+musdebug.0000000002
+f1HN.0000000002
+f2HN.0000000002
+falN.0000000002
+fCpFcnN.0000000002
+fecmHN.0000000002
+ftFcnN.0000000002
+fvN.0000000002
+ktFcnN.0000000002
+```
+The output files from the muscle model can be suppressed by setting the ```output``` flag to 0 in the umat43 material card.
 
 ## Notes
 
 1. Detailed documentation on umat43.f appears in the beginning of the file.
-2. If you change the number of input arguments in the card note that you will have to very carefully adjust the hard-coded indices for each argument. These can be found by searching for `cm(` : the cm vector contains all of the card input values
+
+2. If you change the number of input arguments in the card note that you will have to very carefully adjust the hard-coded indices for each argument. These can be found by searching for `cm(` : the cm vector contains all of the card input values. 
+
 3. If you change the layout of the hsv vector you will have to do this carefully: the layout of this vector is detailed near line 469 of umat43.f. Any updates may also require changes to the idxHsv variables (e.g. idxHsvLp) that store the indices of the hsv values in user-friendly names.
 
 ## Upgrades
 
-All of the curves used in this model are quadratic Bezier splines that have been hard coded in the model. The user is only provided with a modest ability to scale and shift some of these curves, but there is not fine-grained control over the shape of these curves. While this makes the model relatively easy to use, it it limits the degree of customization that is possible. Although it will result in slower code, it would be good to 
+1. All of the curves used in this model are quadratic Bezier splines that have been hard coded in the model. The user is only provided with a modest ability to scale and shift some of these curves, but there is not fine-grained control over the shape of these curves. While this makes the model relatively easy to use, it limits the degree of customization that is possible. Although it will result in slower code, it would be good to 
 
-1. Make a version of umat43 that uses LS-DYNA's built in DEFINE_CURVE. This will make it possible for people to customize these curves.
-2. Make a series of scripts to automatically generate the correct curve values. This is certainly needed for this model as the process of generating the various ECM and titin curves is non-trivial.
+    1. Make a version of umat43 that uses LS-DYNA's built in DEFINE_CURVE. This will make it possible for people to customize these curves.
 
+    2. Make a series of scripts to automatically generate the correct curve values. This is certainly needed for this model as the process of generating the various ECM and titin curves is non-trivial.
 
+2. The reflex controller only turns the muscle on. In reality there is also a reflex called Golgi tendon inhibition that turns the muscle off as its force becomes too high. To learn more about this phenomena start with:
+
+    1. Jami L. Golgi tendon organs in mammalian skeletal muscle: functional properties and central actions. Physiological reviews. 1992 Jul 1;72(3):623-66.
+
+    2. Chalmers G. Strength training: Do Golgi tendon organs really inhibit muscle activity at high force levels to save muscles from injury, and adapt with strength training?. Sports biomechanics. 2002 Jul 1;1(2):239-49.
