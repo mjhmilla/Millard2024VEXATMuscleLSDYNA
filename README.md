@@ -237,7 +237,7 @@ The output files from the muscle model can be suppressed by setting the ```outpu
 6. Here is a quick overview of all of the folders that appear
   - build: contains the files needed to build a version of LS-DYNA with user materials. These files should be stored in the folders MPP_9.3.1/usermat/ and SMP_9.3.1/usermat/ for the multiple message passing and single message passing interfaces respectively.
   - example: contains the files needed to run the umat43 user material to test that it is working.
-  - LICENSE: A folder that contains the licenses that apply to the files in this project. This project's licensing will be compliant with the license auditing tool provided by https://api.reuse.software/
+  - LICENSES: A folder that contains the licenses that apply to the files in this project. This project's licensing is compliant with the license auditing tool provided by https://api.reuse.software/
   - MPP_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
   - SMP_R931: Same as the MPP_R931 folder but contains the single-message-passing compiled version of LS-DYNA (not tested).
   - WORK_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
