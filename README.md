@@ -2,7 +2,9 @@
 
 This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1 using the MPP (  massively-parallel-processing) interface. It is possible to build the SMP (shared-memory-parallel) interface, but this has not been tested as of July 2024). This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3]. Please reference papers [1,2] if you use the VEXAT muscle model, and paper [3] for the reflex-controller.
 
-1. Matthew Millard, Norman Stutzig, Jörg Fehr, Tobias Siebert. A benchmark of muscle models to length changes great and small. Journal of the Mechanical Behavior of Biomedical Materials. 2024 (submitted)
+1.  A benchmark of muscle models to length changes great and small
+Matthew Millard, Norman Stutzig, Jorg Fehr, Tobias Siebert
+bioRxiv 2024.07.26.605117; doi: https://doi.org/10.1101/2024.07.26.605117 (submitted to Journal of the Mechanical Behavior of Biomedical Materials)
 
 2. Matthew Millard, David W Franklin, Walter Herzog. A three filament mechanistic model of musculotendon force and impedance. eLife 12:RP88344, https://doi.org/10.7554/eLife.88344.3, 2024 (accepted)
 
@@ -27,12 +29,13 @@ All of the code and files in this repository are covered by the license mentione
 1. Put a copy of dyn21.f in MPP_R931
 
 2. Edit the copy of dyn21.f so that the make file can automatically insert the subroutines: 
-    1. Open dyn21.f and add the line `C start of umat43` so that it appears just before `subroutine umat43` and `c END OF SUBROUTINE UMAT43` appears after the end statement.
+    1. Open dyn21.f and add the line `C start of umat43` so that it appears just before `subroutine umat43` and `c END OF UMAT43` appears after the end statement. 
     2. If you are also compiling the extended Hill-type muscle (EHTM) model, download the EHTM_v_4.0.00.f (https://doi.org/10.18419/darus-1144)
         1. Place the EHTM_v_4.0.00.f in the WORK_R931 folder
         2. Rename the file to umat41.f
-        3. Open dyn21.f and add the line `C start of umat41` so that it appears just before `subroutine umat41` and `c END OF SUBROUTINE UMAT41` appears after the end statement.
-        4. For more information on the EHTM model please see:
+        3. Open umat41.f and delete the lines that read `C start of umat41` (near line 4 and the beginning of the file), and `c END OF UMAT41` (near line 1842, near the end of the file).
+        4. Open dyn21.f and add the line `C start of umat41` so that it appears just before `subroutine umat41` and `c END OF UMAT41` appears after the end statement for `subroutine umat41`.
+        5. For more information on the EHTM model please see:
 
         - Martynenko OV, Kempter F, Kleinbach C, Nölle LV, Lerge P, Schmitt S, Fehr J. Development and verification of a physiologically motivated internal controller for the open-source extended Hill-type muscle model in LS-DYNA. Biomechanics and Modeling in Mechanobiology. 2023 Dec;22(6):2003-32. https://doi.org/10.1007/s10237-023-01748-9
 
@@ -40,7 +43,9 @@ All of the code and files in this repository are covered by the license mentione
 
         - Günther M, Schmitt S, Wank V. High-frequency oscillations as a consequence of neglected serial damping in Hill-type muscle models. Biological cybernetics. 2007 Jul;97(1):63-79. https://doi.org/10.1007/s00422-007-0160-6
 
-3. Put the files needed to compile an LS-DYNA user material into build/MPP_9.3.1/usermat/ folder. On my machine this list of files includes:
+3. Make a copy of dyn21.f (dyn21.f.orig) so that you can easily restore it if a mistake gets made.
+
+4. Put the files needed to compile an LS-DYNA user material into build/MPP_9.3.1/usermat/ folder. On my machine this list of files includes:
 
 ```
 adjcom.inc
@@ -133,13 +138,13 @@ xjobid.inc
 ```
 
 
-4. Open the file `nhisparm.inc` in MPP_R931 and set NHISVAR to 1000: <code>parameter (NHISVAR=1000)</code>. This sets the maximum size of the user defined buffer for each usrmat to 1000 elements. Note:
+5. Open the file `nhisparm.inc` in MPP_R931 and set NHISVAR to 1000: <code>parameter (NHISVAR=1000)</code>. This sets the maximum size of the user defined buffer for each usrmat to 1000 elements. Note:
     1. This buffer of memory is needed for the delay channel of the VEXAT model's (umat43) reflex controller. 
     2. You can use as little as 300 for nhisvar if you are using the reflex controller. 
     3. If you are not using the reflex controller you should use no less than nhisvar 150. 
     4. The size of the buffer actually used during simulation is set by the ```nhv``` variable in the material card.
 
-5. Open a terminal in the Millard2024VEXATMuscleLSDYNA directory and load the oneAPI tools. If you are working from the University of Stuttgart ITM use this command from one of the computers on the network: ```source /space/fkempter_to_others/intel/oneapi/setvars.sh```. This should produce the output:
+6. Open a terminal in the Millard2024VEXATMuscleLSDYNA directory and load the oneAPI tools. If you are working from the University of Stuttgart ITM use this command from one of the computers on the network: ```source /space/fkempter_to_others/intel/oneapi/setvars.sh```. This should produce the output:
 
 ```
     :: initializing oneAPI environment ...
@@ -168,9 +173,9 @@ xjobid.inc
     :: oneAPI environment initialized ::
 ```
 
-6. From the same terminal that you've just used to load the oneAPI tools call `make MPP931` to compile the MPP version of the library.
+7. From the same terminal that you've just used to load the oneAPI tools call `make MPP931` to compile the MPP version of the library.
 
-7. If everything works you'll have an ```mppdyna``` executable in the MPP_931.
+8. If everything works you'll have an ```mppdyna``` executable in the MPP_931.
 
 ## Testing
 
