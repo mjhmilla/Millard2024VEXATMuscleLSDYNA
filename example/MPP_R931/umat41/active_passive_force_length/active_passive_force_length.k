@@ -14,7 +14,6 @@ R   timeS0 0.99
 R   timeS1 1.00
 R    timeE 2.00
 R  stimLow 0.00
-R    timeE 2.000
 $
 *PARAMETER_EXPRESSION
 $#    name expression
