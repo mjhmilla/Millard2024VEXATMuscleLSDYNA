@@ -26,7 +26,19 @@ All of the code and files in this repository are covered by the license mentione
 
 1. Put a copy of dyn21.f in MPP_R931
 
-2. Edit the copy of dyn21.f so that `C start of umat43` appears just before `subroutine umat43` and `c END OF SUBROUTINE UMAT43` appears after the end statement. 
+2. Edit the copy of dyn21.f so that the make file can automatically insert the subroutines: 
+    1. Open dyn21.f and add the line `C start of umat43` so that it appears just before `subroutine umat43` and `c END OF SUBROUTINE UMAT43` appears after the end statement.
+    2. If you are also compiling the extended Hill-type muscle (EHTM) model, download the EHTM_v_4.0.00.f (https://doi.org/10.18419/darus-1144)
+        1. Place the EHTM_v_4.0.00.f in the WORK_R931 folder
+        2. Rename the file to umat41.f
+        3. Open dyn21.f and add the line `C start of umat41` so that it appears just before `subroutine umat41` and `c END OF SUBROUTINE UMAT41` appears after the end statement.
+        4. For more information on the EHTM model please see:
+
+        - Martynenko OV, Kempter F, Kleinbach C, Nölle LV, Lerge P, Schmitt S, Fehr J. Development and verification of a physiologically motivated internal controller for the open-source extended Hill-type muscle model in LS-DYNA. Biomechanics and Modeling in Mechanobiology. 2023 Dec;22(6):2003-32. https://doi.org/10.1007/s10237-023-01748-9
+
+        - Kleinbach C, Martynenko O, Promies J, Haeufle DF, Fehr J, Schmitt S. Implementation and validation of the extended Hill-type muscle model with robust routing capabilities in LS-DYNA for active human body models. Biomedical engineering online. 2017 Dec;16:1-28. https://doi.org/10.1186/s12938-017-0399-7
+
+        - Günther M, Schmitt S, Wank V. High-frequency oscillations as a consequence of neglected serial damping in Hill-type muscle models. Biological cybernetics. 2007 Jul;97(1):63-79. https://doi.org/10.1007/s00422-007-0160-6
 
 3. Put the files needed to compile an LS-DYNA user material into build/MPP_9.3.1/usermat/ folder. On my machine this list of files includes:
 
