@@ -1,10 +1,8 @@
-# Viscoelastic Cross-bridge Active Titin Muscle Model for LS-DYNA
+# Description
 
-This is an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1 using the MPP (  massively-parallel-processing) interface. It is possible to build the SMP (shared-memory-parallel) interface, but this has not been tested as of July 2024). This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3]. Please reference papers [1,2] if you use the VEXAT muscle model, and paper [3] for the reflex-controller.
+This repository contains an LS-DYNA implementation of Millard et al.'s VEXAT muscle model that also includes the reflex controller described in Wochner et al. This material has only been compiled and tested in LS-DYNA R9.3.1 using the MPP (  massively-parallel-processing) interface. It is possible to build the SMP (shared-memory-parallel) interface, but this has not been tested as of July 2024). This model is benchmarked in [1], formulated in [2], and uses the reflex controller described in [3]. Please reference papers [1,2] if you use the VEXAT muscle model, and paper [3] for the reflex-controller.
 
-1.  A benchmark of muscle models to length changes great and small
-Matthew Millard, Norman Stutzig, Jorg Fehr, Tobias Siebert
-bioRxiv 2024.07.26.605117; doi: https://doi.org/10.1101/2024.07.26.605117 (submitted to Journal of the Mechanical Behavior of Biomedical Materials)
+1.  Matthew Millard, Norman Stutzig, Jorg Fehr, Tobias Siebert. A benchmark of muscle models to length changes great and small. bioRxiv 2024.07.26.605117; doi: https://doi.org/10.1101/2024.07.26.605117 (submitted to Journal of the Mechanical Behavior of Biomedical Materials)
 
 2. Matthew Millard, David W Franklin, Walter Herzog. A three filament mechanistic model of musculotendon force and impedance. eLife 12:RP88344, https://doi.org/10.7554/eLife.88344.3, 2024 (accepted)
 
@@ -24,21 +22,22 @@ To date the VEXAT muscle model has been compiled and run on the following system
 - OS
     - Ubuntu 22.04.4 LTS and 20.04.6 LTS 
 - LS-DYNA MPP 
+    - file: ls-dyna_mpp_d_R9_3_1_x64_centos65_ifort131_sse2_intelmpi-2018.usermat.tar.gz
     - version: mpp d R9.3.1
     - revision: 140922
 - LS-DYNA SMP
     - Not tested.
 - Fortran compiler
-    - Intel:registered: oneAPI Base Toolkit (version 2022.1.2) with  the Intel:registered: oneAPI HPC Toolkit (2022.1.2)
+    - Intel&reg; oneAPI Base Toolkit (version 2022.1.2) with the Intel&reg; oneAPI HPC Toolkit (2022.1.2)
 - MPI library:
-    - Intel:registered: oneAPI HPC Toolkit (version 2022.1.2)
+    - Intel&reg; oneAPI HPC Toolkit (version 2022.1.2)
     - https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html
 
 **Note:**
 
-1. Files required to compile the LS-DYNA user materials were provided by the DYNAmore GmbH transfer server which is available to clients 
+1. The files required to compile the LS-DYNA user materials are provided by the DYNAmore GmbH transfer server which is available to clients 
     - https://files.dynamore.de/
-2. The Intel oneAPI is available here
+2. The Intel oneAPI is available here (free at the time of writing)
     - https://www.intel.com/content/www/us/en/developer/articles/guide/installation-guide-for-oneapi-toolkits.html
 
 
@@ -235,25 +234,32 @@ The output files from the muscle model can be suppressed by setting the ```outpu
 
 1. Open a terminal in 'Millard2024VEXATMuscleLSDYNA/example/MPP_R931/umat41/active_passive_force_length/active_force_length_06/' 
 2. From this terminal call  ```../../../../../MPP_R931/mppdyna i=active_force_length_06.k```
-3. If everying works LS-DYNA will activate the cat soleus model at its optimal fiber length and produce a similar set of output files as the VEXAT model.
+3. If everything works LS-DYNA will activate the cat soleus model at its optimal fiber length and produce a similar set of output files as the VEXAT model.
 
 ## Folder Layout
 
 Here is a quick overview of all of the folders that appear
 
-- build: contains the files needed to build a version of LS-DYNA with user materials. These files should be stored in the folders MPP_9.3.1/usermat/ and SMP_9.3.1/usermat/ for the multiple message passing and single message passing interfaces respectively.
-- example: contains the files needed to run the umat43 user material to test that it is working.
-- LICENSES: A folder that contains the licenses that apply to the files in this project. This project's licensing is compliant with the license auditing tool provided by https://api.reuse.software/
-- MPP_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
-- SMP_R931: Same as the MPP_R931 folder but contains the single-message-passing compiled version of LS-DYNA (not tested).
-- WORK_R931: A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
+- build: 
+    - contains the files needed to build a version of LS-DYNA with user materials. These files should be stored in the folders MPP_9.3.1/usermat/ and SMP_9.3.1/usermat/ for the multiple message passing and single message passing interfaces respectively.
+- example: 
+    - contains the files needed to run the umat43 user material to test that it is working.
+- LICENSES:
+    - A folder that contains the licenses that apply to the files in this project. This project's licensing is compliant with the license auditing tool provided by https://api.reuse.software/
+- MPP_R931: 
+    - A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
+- SMP_R931: 
+    - Same as the MPP_R931 folder but contains the single-message-passing compiled version of LS-DYNA (not tested).
+- WORK_R931: 
+    - A folder that contains the dyn21.f file (for the user materials) and the compiled version of LS-DYNA using the MPP interface
 
 
 ## Developer Notes
 
-1. Detailed documentation on umat43.f appears in the beginning of the file.
-2. If you change the number of input arguments in the card note that you will have to very carefully adjust the hard-coded indices for each argument. These can be found by searching for `cm(` : the cm vector contains all of the card input values. 
-3. If you change the layout of the hsv vector you will have to do this carefully: the layout of this vector is detailed near line 469 of umat43.f. Any updates may also require changes to the idxHsv variables (e.g. idxHsvLp) that store the indices of the hsv values in user-friendly names.
+1. Detailed documentation on umat43.f appears in the beginning of the file. Be forewarned: it is possible that this documentation is slightly out of date.
+2. The implementation has been developed under the assumption that carefully chosen variable names and a judicious use of modularization will be sufficient for an expert to work with this code. As such the code is sparsely commented.
+3. If you change the number of input arguments in the card note that you will have to very carefully adjust the hard-coded indices for each argument. These can be found by searching for `cm(` : the cm vector contains all of the card input values. 
+4. If you change the layout of the hsv vector you will have to do this carefully: the layout of this vector is detailed near line 469 of umat43.f. Any updates may also require changes to the idxHsv variables (e.g. idxHsvLp) that store the indices of the hsv values in user-friendly names.
 
 ## Limitations
 
