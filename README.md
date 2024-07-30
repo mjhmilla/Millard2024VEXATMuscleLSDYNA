@@ -270,7 +270,7 @@ Here is a quick overview of all of the folders that appear
 
 ## Future Work
 
-1. All of the curves used in this model are quadratic Bezier splines that have been hard coded in the model. The user is only provided with a modest ability to scale and shift some of these curves, but there is not fine-grained control over the shape of these curves. While this makes the model relatively easy to use, it limits the degree of customization that is possible. Although it will result in slower code, it would be good to 
+1. All of the curves used in this model are quadratic Bezier splines that have been hard coded in the model. These curves are described in a normalized space, and so, are effectively scaled using only the parameters of the models. However, there is a limited ability to change the normalized shape of these curves. The user can scale and shift some of these curves but there is not fine-grained control over the shape of these curves. While this makes the model relatively easy to use, it limits the degree of customization that is possible. Although it will result in slower code, it would be good to 
     1. Make a version of umat43 that uses LS-DYNA's built in DEFINE_CURVE. This will make it possible for people to customize these curves.
     2. Make a series of scripts to automatically generate the correct curve values. This is certainly needed for this model as the process of generating the various ECM and titin curves is non-trivial (see Millard et al. https://doi.org/10.7554/eLife.88344.3 for details).
 2. The VEXAT implementation has been written to be easily read. As such, there are a number of opportunities for improved performance:
