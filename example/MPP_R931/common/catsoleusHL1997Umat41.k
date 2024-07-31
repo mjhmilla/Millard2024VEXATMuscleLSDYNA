@@ -1,3 +1,9 @@
+$
+$ SPDX-FileCopyrightText: 2024 Matthew Millard <millard.matthew@gmail.com>
+$
+$ SPDX-License-Identifier: MIT
+$
+$
 *KEYWORD
 *MAT_USER_DEFINED_MATERIAL_MODELS
 $ Hill-type Muscle
