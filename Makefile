@@ -13,6 +13,9 @@
 # modified Matthew Millard 25 April 2024
 # modified Matthew Millard July 2024
 
+# MPP definitions
+load_module_MPP 	= module add compiler/intel/2013 && module add compiler/mpi/pmpi/9.01
+
 # get current directory
 current_dir=$(shell pwd)
 
